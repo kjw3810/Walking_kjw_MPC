@@ -1,0 +1,35 @@
+Walking_kjw 사용법
+==================
+
+빌드
+----
+cd Walking_kjw/
+  ./build_mujoco.sh
+  ./build_controller.sh
+
+실행
+----
+cd Walking_kjw/
+  ./run_mujoco.sh                     GUI 뷰어에 pendulum.xml 열기 (기본값)
+  ./run_mujoco.sh path/to/model.xml   GUI 뷰어에 원하는 모델 열기
+  ./run_mujoco.sh Mujoco/model/g1/g1.xml   Unitree G1(손 없음, 팔/손목 fixed) 열기
+  ./run_controller.sh                 controller 실행 파일 실행
+                                       (시작 시 Controller/model/g1/g1.urdf를
+                                       Pinocchio free-flyer 모델로 로드)
+
+뷰어 조작:
+  Space       재생 / 일시정지
+  마우스 드래그  카메라 회전
+  스크롤       줌
+  Ctrl+드래그   모델을 마우스로 밀어보기 (힘 가하기)
+
+
+
+푸시 (외력 시험)
+----------------
+ex) pu 80 0 전방 80N의 힘을 지면 위 1m 높이에 가함. 
+controller 쉘에서:  pu <fx> <fy> [dur]     (push)
+  상체 바디의 지면 위 1.0m 높이(서 있는 자세 기준)에 월드 좌표계 힘(N, x=앞, y=왼쪽)을 dur초(기본 0.1) 동안 가함. 예) pu 0 80 = 왼쪽 80N, pu -80 0 = 뒤 80N
+  GUI 시뮬레이션 창에서 그대로 보임 (화살표는 안 그림, 로봇이 밀리는 것으로 확인).
+  주의: msg_ref 구조체가 바뀌었으므로 build_mujoco.sh / build_controller.sh 를 둘 다 빌드하고
+        시뮬레이터와 컨트롤러를 둘 다 다시 시작해야 함.
